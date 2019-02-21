@@ -1,5 +1,5 @@
 {
-  "name": "mejta-optimize",
+  "name": "wp-speedup",
   "version": "1.0.0",
   "main": "lazyload.js",
   "author": "Daniel Mejta<daniel@mejta.net>",

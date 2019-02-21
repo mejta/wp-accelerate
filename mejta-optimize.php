@@ -1,7 +1,7 @@
 <?php
 /*
-Plugin Name: WordPress Optimizations
-Description: Optimizations for WordPress - lazy loading and scripts defer.
+Plugin Name: WordPress Speedup
+Description: Speed Optimizations for WordPress websites.
 Version: 0.1.0
 Author: Daniel Mejta
 Author URI: https://www.mejta.net/
