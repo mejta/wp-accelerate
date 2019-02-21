@@ -1,6 +1,6 @@
 <?php
 /*
-Plugin Name: WordPress Speedup
+Plugin Name: WordPress Accelerate
 Description: Speed Optimizations for WordPress websites.
 Version: 0.1.0
 Author: Daniel Mejta
@@ -9,7 +9,7 @@ Author URI: https://www.mejta.net/
 
 defined( 'ABSPATH' ) || exit;
 
-class MejtaOptimize {
+class WPAccelerate {
   public function __construct() {
     $this->defer_scripts();
     $this->lazyload();
@@ -17,7 +17,7 @@ class MejtaOptimize {
 
   public function defer_scripts() {
     add_filter('script_loader_tag', function ($tag, $handle) {
-      if (!is_admin() && preg_match('/\sdefer(="defer")?\s/', $tag) !== 1) {
+      if (!is_admin() && preg_match('/\sdefer(=["\']defer["\'])?\s/', $tag) !== 1) {
         return str_replace(' src', ' defer src', $tag);
       }
 
@@ -31,7 +31,9 @@ class MejtaOptimize {
 
       foreach(glob($folder . 'build/*.js') as $file) {
         $filename = str_replace($folder, '', $file);
-        wp_enqueue_script('mejta-lazyload', plugins_url($filename, __FILE__), [], null, true);
+        preg_match('/(\S+)\.[[:alnum:]]+\.min\.js/', $file, $handle);
+        $handle = isset($handle[1]) ? $handle[1] : 'script';
+        wp_enqueue_script('wp-speedup-' . $handle, plugins_url($filename, __FILE__), [], null, true);
       };
     }, 1);
 
@@ -62,4 +64,4 @@ class MejtaOptimize {
   }
 }
 
-new MejtaOptimize();
+new WPAccelerate();
