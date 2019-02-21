@@ -32,7 +32,7 @@ class WPAccelerate {
       foreach(glob($folder . 'build/*.js') as $file) {
         $filename = str_replace($folder, '', $file);
         preg_match('/(\S+)\.[[:alnum:]]+\.min\.js/', $file, $handle);
-        $handle = isset($handle[1]) ? $handle[1] : 'script';
+        $handle = 'wp-accelerate-' . (isset($handle[1]) ? str_replace($folder . 'build/', '', $handle[1]) : 'script');
         wp_enqueue_script('wp-speedup-' . $handle, plugins_url($filename, __FILE__), [], null, true);
       };
     }, 1);
