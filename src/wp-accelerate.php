@@ -2,7 +2,7 @@
 /*
 Plugin Name: WordPress Accelerate
 Description: Speed Optimizations for WordPress websites.
-Version: 0.1.0
+Version: x.x.x
 Author: Daniel Mejta
 Author URI: https://www.mejta.net/
 */
@@ -29,11 +29,12 @@ class WPAccelerate {
     add_action('wp_enqueue_scripts', function () {
       $folder = plugin_dir_path(__FILE__);
 
-      foreach(glob($folder . 'build/*.js') as $file) {
+      foreach(glob($folder . '*.js') as $file) {
         $filename = str_replace($folder, '', $file);
-        preg_match('/(\S+)\.[[:alnum:]]+\.min\.js/', $file, $handle);
-        $handle = 'wp-accelerate-' . (isset($handle[1]) ? str_replace($folder . 'build/', '', $handle[1]) : 'script');
-        wp_enqueue_script($handle, plugins_url($filename, __FILE__), [], null, true);
+        if (preg_match('/(\S+)\.[[:alnum:]]+\.min\.js/', $file, $handle) === 1) {
+          $handle = 'wp-accelerate-' . (isset($handle[1]) ? str_replace($folder . 'build/', '', $handle[1]) : 'script');
+          wp_enqueue_script($handle, plugins_url($filename, __FILE__), [], null, true);  
+        }
       };
     }, 1);
 
