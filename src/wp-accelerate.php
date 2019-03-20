@@ -17,7 +17,7 @@ class WPAccelerate {
 
   public function defer_scripts() {
     add_filter('script_loader_tag', function ($tag, $handle) {
-      if (!is_admin() && preg_match('/\sdefer(=["\']defer["\'])?\s/', $tag) !== 1) {
+      if (!is_user_logged_in() && preg_match('/\sdefer(=["\']defer["\'])?\s/', $tag) !== 1 && $handle !== 'jquery') {
         return str_replace(' src', ' defer src', $tag);
       }
 
@@ -27,6 +27,10 @@ class WPAccelerate {
 
   public function lazyload() {
     add_action('wp_enqueue_scripts', function () {
+      if (is_user_logged_in()) {
+        return;
+      }
+      
       $folder = plugin_dir_path(__FILE__);
 
       foreach(glob($folder . '*.js') as $file) {
@@ -39,7 +43,7 @@ class WPAccelerate {
     }, 1);
 
     add_action('init', function () {
-      if (!is_admin()) {
+      if (!is_user_logged_in()) {
         ob_start(function ($content) {
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {

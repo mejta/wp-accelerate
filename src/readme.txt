@@ -2,14 +2,13 @@
 Contributors: mejta
 Donate link: https://www.mejta.net/
 Tags: optimization, lazyloading
-Requires at least: 5.0
+Requires at least: 4.1
 Tested up to: 5.1
-Stable tag: 1.0
-Requires PHP: 7.1
+Requires PHP: 5.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This no-config plugin makes WordPress website more performant with deferring JavaScripts and lazy-loading of images and iframes.
+This no-config plugin makes WordPress website more performant with deferring JavaScripts and lazy-loading of images and iframes. The plugin run optimizations only if no user is logged in.
 
 == Description ==
 
