@@ -3,7 +3,7 @@ Contributors: mejta
 Donate link: https://www.mejta.net/
 Tags: optimization, lazyloading
 Requires at least: 4.1
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 5.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -36,6 +36,9 @@ You need to have node.js and yarn installed.
 1. Profit!
 
 == Changelog ==
+
+= 1.0.2 =
+* Apply lazy-loading only when on front-end and when not doing ajax, etc.
 
 = 1.0 =
 * Initial release

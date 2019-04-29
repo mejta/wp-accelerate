@@ -7,7 +7,7 @@ Author: Daniel Mejta
 Author URI: https://www.mejta.net/
 */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit;
 
 class WPAccelerate {
   public function __construct() {
@@ -25,9 +25,20 @@ class WPAccelerate {
     }, 10, 2);
   }
 
+  public function do_lazyload() {
+    return (
+      !wp_doing_ajax() && 
+      !wp_doing_cron() && 
+      !wp_is_json_request() && 
+      !defined('XMLRPC_REQUEST') && 
+      !defined('REST_REQUEST') && 
+      !is_admin()
+    );
+  }
+
   public function lazyload() {
     add_action('wp_enqueue_scripts', function () {
-      if (is_user_logged_in()) {
+      if (!$this->do_lazyload()) {
         return;
       }
       
@@ -43,7 +54,7 @@ class WPAccelerate {
     }, 1);
 
     add_action('init', function () {
-      if (!is_user_logged_in()) {
+      if ($this->do_lazyload()) {
         ob_start(function ($content) {
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {
