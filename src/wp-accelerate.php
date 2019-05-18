@@ -32,7 +32,8 @@ class WPAccelerate {
       !wp_is_json_request() && 
       !defined('XMLRPC_REQUEST') && 
       !defined('REST_REQUEST') && 
-      !is_admin()
+      !is_admin() &&
+      apply_filters('wp_accelerate_lazyload', true)
     );
   }
 
@@ -56,6 +57,8 @@ class WPAccelerate {
     add_action('init', function () {
       if ($this->do_lazyload()) {
         ob_start(function ($content) {
+          if (!$this->do_lazyload()) return $content;
+
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {
               preg_match('/width=["\']?(\d+)["\']?/', $image, $width);

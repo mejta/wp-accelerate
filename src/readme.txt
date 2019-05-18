@@ -37,6 +37,9 @@ You need to have node.js and yarn installed.
 
 == Changelog ==
 
+= 1.1.0 =
+* Add wp_accelerate_lazyload filter
+
 = 1.0.2 =
 * Apply lazy-loading only when on front-end and when not doing ajax, etc.
 
