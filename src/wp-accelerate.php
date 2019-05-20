@@ -74,7 +74,9 @@ class WPAccelerate {
             }
           };
 
-          $content = preg_replace('/(<iframe[^>]+) (src)/xm', '$1 data-$2', $content);
+          $content = preg_replace('/(<iframe[^>]+)(src)/xm', '$1data-$2', $content);
+          $content = preg_replace('/(<source[^>]+)(src=)/xm', '$1data-$2', $content);
+          $content = preg_replace('/(<source[^>]+)(srcset=)/xm', '$1data-$2', $content);
 
           return $content;
         });

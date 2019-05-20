@@ -20,6 +20,6 @@ window.addEventListener('load', function() {
   }
 
   document
-    .querySelectorAll('iframe[data-src],img[data-src]')
+    .querySelectorAll('iframe[data-src],img[data-src],img[data-srcset],source[data-srcset],source[data-src]')
     .forEach(element => new IntersectionObserver(lazyload).observe(element));
 });

@@ -37,6 +37,9 @@ You need to have node.js and yarn installed.
 
 == Changelog ==
 
+= 1.2.0 =
+* Added support for lazyloading of `<picture>`, `<video>` and `<audio>` elements
+
 = 1.1.0 =
 * Add wp_accelerate_lazyload filter
 

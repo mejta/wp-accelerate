@@ -37,6 +37,10 @@ add_filter('wp_accelerate_lazyload', function($do_lazyload) {
 
 ## Changelog
 
+### version 1.2
+
+- Added support for lazyloading of `<picture>`, `<video>` and `<audio>` elements
+
 ### version 1.1
 
 - Filter `wp_accelerate_lazyload` added
