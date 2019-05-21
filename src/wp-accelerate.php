@@ -59,6 +59,10 @@ class WPAccelerate {
         ob_start(function ($content) {
           if (!$this->should_accelerate()) return $content;
 
+          $content = preg_replace('/(<iframe[^>]+)(src)/xm', '$1data-$2', $content);
+          $content = preg_replace('/(<source[^>]+)(src=)/xm', '$1data-$2', $content);
+          $content = preg_replace('/(<source[^>]+)(srcset=)/xm', '$1data-$2', $content);
+
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {
               preg_match('/width=["\']?(\d+)["\']?/', $image, $width);
@@ -73,10 +77,6 @@ class WPAccelerate {
               $content = str_replace($image, $replacement, $content);
             }
           };
-
-          $content = preg_replace('/(<iframe[^>]+)(src)/xm', '$1data-$2', $content);
-          $content = preg_replace('/(<source[^>]+)(src=)/xm', '$1data-$2', $content);
-          $content = preg_replace('/(<source[^>]+)(srcset=)/xm', '$1data-$2', $content);
 
           return $content;
         });
