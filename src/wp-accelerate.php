@@ -80,7 +80,7 @@ class WPAccelerate {
             }
           };
 
-          return $content;
+          return apply_filters('wp_accelerate_content', $content);
         });
       }
     });

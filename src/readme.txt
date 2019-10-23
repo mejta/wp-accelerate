@@ -37,6 +37,9 @@ You need to have node.js and yarn installed.
 
 == Changelog ==
 
+= 1.2.5 =
+* Added filter for content `wp_accelerate_content`
+
 = 1.2.4 =
 * Added support for lazyloaded background images with `style="background-image: url(...)"`
 
