@@ -1,12 +1,12 @@
+import del from 'delete';
+import fs from 'fs';
 import gulp from 'gulp';
 import gulpif from 'gulp-if';
-import webpack from 'webpack';
-import del from 'delete';
-import through from 'through2';
 import path from 'path';
-import program from 'commander';
 import pkg from './package.json';
-import fs from 'fs';
+import program from 'commander';
+import through from 'through2';
+import webpack from 'webpack';
 
 program
   .version(pkg.version)
@@ -15,10 +15,13 @@ program
 
 const config = mode => ({
   mode,
-  entry: path.resolve(__dirname, 'src/lazyload.js'),
+  entry: {
+    lazyload: path.resolve(__dirname, 'src/lazyload.js'),
+  },
   output: {
     path: path.resolve(__dirname, 'dist/trunk'),
-    filename: 'lazyload.[hash:8].min.js',
+    filename: '[name].[hash:8].min.js',
+    chunkFilename: '[name].[hash:8].min.js',
   },
   module: {
     rules: [

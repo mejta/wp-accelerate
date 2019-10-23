@@ -17,7 +17,9 @@ class WPAccelerate {
 
   public function defer_scripts() {
     add_filter('script_loader_tag', function ($tag, $handle) {
-      if ($this->should_accelerate() && preg_match('/\sdefer(=["\']defer["\'])?\s/', $tag) !== 1 && $handle !== 'jquery') {
+      $no_defer = apply_filters('wp_accelerate_no_defer', ['jquery-core', 'jquery-migrate']);
+
+      if ($this->should_accelerate() && apply_filters('wp_accelerate_defer', true) && preg_match('/\sdefer(=["\']defer["\'])?\s/', $tag) !== 1 && !in_array($handle, $no_defer)) {
         return str_replace(' src', ' defer src', $tag);
       }
 
@@ -32,14 +34,13 @@ class WPAccelerate {
       !wp_is_json_request() && 
       !defined('XMLRPC_REQUEST') && 
       !defined('REST_REQUEST') && 
-      !is_admin() &&
-      apply_filters('wp_accelerate_lazyload', true)
+      !is_admin()
     );
   }
 
   public function lazyload() {
     add_action('wp_enqueue_scripts', function () {
-      if (!$this->should_accelerate()) {
+      if (!($this->should_accelerate() && apply_filters('wp_accelerate_lazyload', true))) {
         return;
       }
       
@@ -47,7 +48,7 @@ class WPAccelerate {
 
       foreach(glob($folder . '*.js') as $file) {
         $filename = str_replace($folder, '', $file);
-        if (preg_match('/(\S+)\.[[:alnum:]]+\.min\.js/', $file, $handle) === 1) {
+        if (preg_match('/(lazyload)\.[[:alnum:]]+\.min\.js/', $file, $handle) === 1) {
           $handle = 'wp-accelerate-' . (isset($handle[1]) ? str_replace($folder . 'build/', '', $handle[1]) : 'script');
           wp_enqueue_script($handle, plugins_url($filename, __FILE__), [], null, true);  
         }
@@ -55,13 +56,14 @@ class WPAccelerate {
     }, 1);
 
     add_action('init', function () {
-      if ($this->should_accelerate()) {
+      if ($this->should_accelerate() && apply_filters('wp_accelerate_lazyload', true)) {
         ob_start(function ($content) {
           if (!$this->should_accelerate()) return $content;
 
           $content = preg_replace('/(<iframe[^>]+)(src)/xm', '$1data-$2', $content);
           $content = preg_replace('/(<source[^>]+)(src=)/xm', '$1data-$2', $content);
           $content = preg_replace('/(<source[^>]+)(srcset=)/xm', '$1data-$2', $content);
+          $content = preg_replace('/(style="[^"]*)(background-image:)/xm', '$1--lazyload-$2', $content);
 
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {

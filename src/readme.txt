@@ -3,7 +3,7 @@ Contributors: mejta
 Donate link: https://www.mejta.net/
 Tags: optimization, lazyloading
 Requires at least: 4.1
-Tested up to: 5.2
+Tested up to: 5.3
 Requires PHP: 5.6
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -36,6 +36,12 @@ You need to have node.js and yarn installed.
 1. Profit!
 
 == Changelog ==
+
+= 1.2.4 =
+* Added support for lazyloaded background images with `style="background-image: url(...)"`
+
+= 1.2.3 =
+* Added support for wp_accelerate_lazyload, wp_accelerate_defer and wp_accelerate_no_defer filters
 
 = 1.2.0 =
 * Added support for lazyloading of `<picture>`, `<video>` and `<audio>` elements

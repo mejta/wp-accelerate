@@ -1,25 +1,40 @@
-import 'intersection-observer';
+if ('IntersectionObserver' in window) {
+  handleLazyLoad();
+} else {
+  import('intersection-observer').then(handleLazyLoad);
+}
 
-window.addEventListener('load', function() {
-  function lazyload(entries) {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const element = entry.target;
+function handleLazyLoad() {
+  window.addEventListener('load', function() {
+    function lazyload(attr) {
+      return function(entries) {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.target.getAttribute(`data-${attr}`)) {
+            entry.target.setAttribute(attr, entry.target.getAttribute(`data-${attr}`));
+            entry.target.removeAttribute(`data-${attr}`);
+          }
+        });  
+      };
+    }
 
-        if (element.getAttribute('data-src')) {
-          element.setAttribute('src', element.getAttribute('data-src'));
-          element.removeAttribute('data-src');
+    function lazyloadBackgroundImage(entries) {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.setAttribute('style', entry.target.getAttribute('style').replace('--lazyload-background-image', 'background-image'));
         }
+      });
+    }
+    
+    document
+      .querySelectorAll('source[data-srcset],img[data-srcset]')
+      .forEach(element => new IntersectionObserver(lazyload('srcset')).observe(element));
+    
+    document
+      .querySelectorAll('iframe[data-src],source[data-src],img[data-src]')
+      .forEach(element => new IntersectionObserver(lazyload('src')).observe(element));
 
-        if (element.getAttribute('data-srcset')) {
-          element.setAttribute('srcset', element.getAttribute('data-srcset'));
-          element.removeAttribute('data-srcset');
-        }
-      }
-    });
-  }
-
-  document
-    .querySelectorAll('iframe[data-src],img[data-src],img[data-srcset],source[data-srcset],source[data-src]')
-    .forEach(element => new IntersectionObserver(lazyload).observe(element));
-});
+    document
+      .querySelectorAll('[style*="--lazyload-background-image"]')
+      .forEach(element => new IntersectionObserver(lazyloadBackgroundImage).observe(element));
+  });
+}
