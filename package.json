@@ -1,6 +1,6 @@
 {
   "name": "wp-accelerate",
-  "version": "1.2.5",
+  "version": "1.2.7",
   "main": "lazyload.js",
   "author": "Daniel Mejta <daniel@mejta.net>",
   "license": "MIT",
@@ -9,31 +9,39 @@
     "start": "gulp start"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.6.0",
+    "core-js": "3",
     "intersection-observer": "^0.7.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
-    "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.3",
     "@babel/register": "^7.6.2",
     "babel-loader": "^8.0.6",
-    "commander": "^3.0.2",
+    "commander": "^4.0.0",
     "delete": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",
     "gulp-if": "^3.0.0",
     "through2": "^3.0.1",
     "webpack": "^4.41.2",
-    "webpack-cli": "^3.3.9"
+    "webpack-cli": "^3.3.10"
   },
   "browserslist": [
     "last 3 version",
     "> 0.5%",
-    "not dead"
+    "not dead",
+    "IE 11"
   ],
   "babel": {
     "presets": [
-      "@babel/preset-env"
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3
+        }
+      ]
     ]
   },
   "sideEffects": false

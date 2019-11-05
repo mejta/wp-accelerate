@@ -63,7 +63,7 @@ class WPAccelerate {
           $content = preg_replace('/(<iframe[^>]+)(src)/xm', '$1data-$2', $content);
           $content = preg_replace('/(<source[^>]+)(src=)/xm', '$1data-$2', $content);
           $content = preg_replace('/(<source[^>]+)(srcset=)/xm', '$1data-$2', $content);
-          $content = preg_replace('/(style="[^"]*)(background-image:)/xm', '$1--lazyload-$2', $content);
+          $content = preg_replace('/(style="[^"]*)(background-image:\s*url\([^\)]+\)\s*;?\s*)([^"]*")/', 'data-$1$2$3 $1$3', $content);
 
           if (preg_match_all('/<img[^>]+>/xm', $content, $images)) {
             foreach ($images[0] as $image) {
