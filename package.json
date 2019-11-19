@@ -1,6 +1,6 @@
 {
   "name": "wp-accelerate",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "main": "lazyload.js",
   "author": "Daniel Mejta <daniel@mejta.net>",
   "license": "MIT",
@@ -9,16 +9,16 @@
     "start": "gulp start"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.6.0",
-    "core-js": "3",
+    "@babel/polyfill": "^7.7.0",
+    "core-js": "3.4.1",
     "intersection-observer": "^0.7.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/register": "^7.6.2",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
     "babel-loader": "^8.0.6",
-    "commander": "^4.0.0",
+    "commander": "^4.0.1",
     "delete": "^1.1.0",
     "gulp": "^4.0.2",
     "gulp-cli": "^2.2.0",

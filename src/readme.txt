@@ -37,6 +37,9 @@ You need to have node.js and yarn installed.
 
 == Changelog ==
 
+= 1.2.8 =
+* Dependencies upgrade
+
 = 1.2.7 =
 * Fixed for IE
 
