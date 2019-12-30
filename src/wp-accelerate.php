@@ -34,7 +34,8 @@ class WPAccelerate {
       !wp_is_json_request() && 
       !defined('XMLRPC_REQUEST') && 
       !defined('REST_REQUEST') && 
-      !is_admin()
+      !is_admin() &&
+      !(class_exists('FLBuilderModel') && FLBuilderModel::is_builder_enabled()) // Beaver Builder compatibility
     );
   }
 

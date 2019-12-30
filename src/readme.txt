@@ -37,6 +37,9 @@ You need to have node.js and yarn installed.
 
 == Changelog ==
 
+= 1.2.9 =
+* Beaver Builder compatibility
+
 = 1.2.8 =
 * Dependencies upgrade
 

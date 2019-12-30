@@ -1,6 +1,6 @@
 {
   "name": "wp-accelerate",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "main": "lazyload.js",
   "author": "Daniel Mejta <daniel@mejta.net>",
   "license": "MIT",
